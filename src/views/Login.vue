@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import { LOGIN_URI } from '@/common/config';
+import { post } from '@/common/api.service';
+
 export default {
     name: 'login',
     data() {
@@ -24,13 +27,27 @@ export default {
         }
     },
     methods: {
-        doLogin() {
+        async doLogin() {
             const payload = {
-                username: this.username,
+                user_name: this.username,
                 password: this.password
             }
-            console.log(payload);
-        }
+
+            try {
+                const resp = await post(LOGIN_URI, payload)
+                if (resp  && resp.data.token) {
+                    // set token and redirect
+                    localStorage.setItem('token', resp.data.token)
+                    this.$router.push('/')
+                } else {
+                    alert(resp.message);
+                }
+                return;
+            } catch (e) {
+                console.log('exception -> ',e)
+                return;
+            }
+        }   
     }
 }
 </script>
