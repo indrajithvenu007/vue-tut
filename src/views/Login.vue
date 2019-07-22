@@ -40,7 +40,7 @@ export default {
                     localStorage.setItem('token', resp.data.token)
                     this.$router.push('/')
                 } else {
-                    alert(resp.message);
+                    alert(resp.data.message);
                 }
                 return;
             } catch (e) {

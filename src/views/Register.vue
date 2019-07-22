@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import { REGISTER_URI } from '@/common/config';
+import { post } from '@/common/api.service';
+
 export default {
     name: 'register',
     data() {
@@ -24,12 +27,25 @@ export default {
         }
     },
     methods: {
-        doRegister() {
+        async doRegister() {
             const payload = {
-                username: this.username,
+                user_name: this.username,
                 password: this.password
             }
-            console.log(payload);
+            try {
+                const resp = await post(REGISTER_URI, payload)
+                if (resp) {
+                    alert(resp.data.msg)
+                    this.$router.push('/login')
+                } else {
+                    console.log(resp)
+                    alert(resp.data.error.detail);
+                }
+                return;
+            } catch (e) {
+                console.log('exception -> ',e)
+                return;
+            }
         }
     }
 }
