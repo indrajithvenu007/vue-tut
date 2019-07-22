@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
           params: { nextUrl: to.fullPath }
       })
     } else {
-      let token = JSON.parse(localStorage.getItem('token'))
+      let token = localStorage.getItem('token')
       if (token == '') {
         next({
           path: '/login',
