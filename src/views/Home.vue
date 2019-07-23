@@ -1,17 +1,20 @@
 <template>
   <div class="beet-list">
+    <Beet
+      v-for="beet in beets" :key="beet.beat_id" :beet="beet" @delete_beet="handleDeleteBeet"
+    ></Beet>
   </div>
 </template>
 
 <script>
 import { BEATS_URI } from '@/common/config';
 import { get } from '@/common/api.service';
-// import HelloWorld from '@/components/HelloWorld.vue'
+import Beet from '@/components/Beet.vue'
 
 export default {
   name: 'home',
   components: {
-    // HelloWorld
+    Beet
   },
   data() {
     return {
@@ -35,6 +38,9 @@ export default {
         console.log('exp -> ', e)
         return;
       }
+    },
+    handleDeleteBeet(params) {
+      console.log(params)
     }
   }
 }
